@@ -75,9 +75,9 @@ module "vmlinux" {
   os_disk_type     = "Standard_LRS"
   os_disk_size_gb  = 32
   image = {
-    publisher = "OpenLogic"
-    offer     = "CentOS"
-    sku       = "8_2-gen2"
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
     version   = "latest"
   }
   nw_extension = {
@@ -165,14 +165,14 @@ module "loadbalancer" {
 module "database" {
   source                = "./modules/database-2404-9654"
   rg_name               = module.rgroup.rg_name
-  location              = local.location
-  db_name               = "${local.humber_id}-psql-group"
+  location              = "canadacentral" # PostgreSQL restricted in westus3
+  db_name               = "${local.humber_id}-psqldb"
   db_version            = "16"
   admin_login           = "psqladmin"
   admin_password        = "Rdata@2404"
   sku_name              = "B_Standard_B1ms"
   storage_mb            = 32768
   backup_retention_days = 7
-  zone                  = "1"
+  zone                  = null
   tags                  = local.common_tags
 }
