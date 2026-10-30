@@ -52,7 +52,7 @@ module "common" {
   law_name             = "${local.humber_id}-LAW"
   law_sku              = "PerGB2018"
   law_retention_days   = 30
-  rsv_name             = "${local.humber_id}-RSV"
+  rsv_name             = "RSV-${local.humber_id}"
   rsv_sku              = "Standard"
   storage_account_name = "${local.humber_id}ruchipatelsa"
   storage_tier         = "Standard"

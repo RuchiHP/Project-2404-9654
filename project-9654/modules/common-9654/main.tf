@@ -12,7 +12,6 @@ resource "azurerm_recovery_services_vault" "rsv" {
   location            = var.location
   resource_group_name = var.rg_name
   sku                 = var.rsv_sku
-  soft_delete_enabled = false
   tags                = var.tags
 }
 
