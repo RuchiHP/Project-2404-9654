@@ -12,3 +12,7 @@ terraform apply --auto-approve
 terraform state list | nl   # 48 lines
 terraform output
 ```
+
+## Architecture
+
+![Architecture diagram](architecturediagram.png)
