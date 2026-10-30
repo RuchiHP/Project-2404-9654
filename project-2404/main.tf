@@ -67,8 +67,8 @@ module "vmlinux" {
   linux_vms        = local.linux_vms
   vm_size          = "Standard_B1ms"
   admin_username   = "ruchiadmin"
-  public_key_path  = "~/.ssh/id_rsa.pub"
-  private_key_path = "~/.ssh/id_rsa"
+  public_key_path  = "~/.ssh/id_rsa_tf.pub"
+  private_key_path = "~/.ssh/id_rsa_tf"
   subnet_id        = module.network.subnet_id
   boot_diag_uri    = module.common.storage_account_blob_endpoint
   dns_label_prefix = "rp"
