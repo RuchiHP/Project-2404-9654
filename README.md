@@ -2,7 +2,7 @@
 
 **Group:** Ruchi Patel (N10042404) & Sukrutha Srirangam (N10039654)
 **Root module:** `project-2404-9654/`
-**Region:** Central US (availability zones 1, 2, 3)
+**Region:** West US 3 (availability zones 1, 2, 3)
 
 ```bash
 cd project-2404-9654

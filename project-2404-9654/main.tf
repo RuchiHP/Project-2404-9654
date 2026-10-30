@@ -1,6 +1,6 @@
 locals {
   humber_id = "2404-9654"
-  location  = "centralus"
+  location  = "westus3"
 
   common_tags = {
     Project        = "CCGC 5502 Terraform Project"
@@ -65,7 +65,7 @@ module "vmlinux" {
   rg_name          = module.rgroup.rg_name
   location         = local.location
   linux_vms        = local.linux_vms
-  vm_size          = "Standard_B2ats_v2"
+  vm_size          = "Standard_D2s_v4"
   admin_username   = "ruchiadmin"
   public_key_path  = "~/.ssh/id_rsa_tf.pub"
   private_key_path = "~/.ssh/id_rsa_tf"
@@ -102,7 +102,7 @@ module "vmwindows" {
   vm_count         = local.windows_count
   vm_name_prefix   = local.windows_name_prefix
   avset_name       = "${local.humber_id}-w-avset"
-  vm_size          = "Standard_B2als_v2"
+  vm_size          = "Standard_D2s_v4"
   admin_username   = "ruchiadmin"
   admin_password   = "Rproject@2404"
   subnet_id        = module.network.subnet_id
