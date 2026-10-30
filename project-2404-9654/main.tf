@@ -1,10 +1,10 @@
 locals {
-  humber_id = "9654"
-  location  = "canadacentral"
+  humber_id = "2404-9654"
+  location  = "centralus"
 
   common_tags = {
     Project        = "CCGC 5502 Terraform Project"
-    Name           = "sukrutha.srirangam"
+    Name           = "ruchi.patel"
     ExpirationDate = "2027-12-31"
     Environment    = "Learning"
   }
@@ -21,14 +21,14 @@ locals {
 }
 
 module "rgroup" {
-  source   = "./modules/rgroup-9654"
+  source   = "./modules/rgroup-2404-9654"
   rg_name  = "${local.humber_id}-RG"
   location = local.location
   tags     = local.common_tags
 }
 
 module "network" {
-  source                  = "./modules/network-9654"
+  source                  = "./modules/network-2404-9654"
   rg_name                 = module.rgroup.rg_name
   location                = local.location
   vnet_name               = "${local.humber_id}-VNET"
@@ -46,38 +46,38 @@ module "network" {
 }
 
 module "common" {
-  source               = "./modules/common-9654"
+  source               = "./modules/common-2404-9654"
   rg_name              = module.rgroup.rg_name
   location             = local.location
   law_name             = "${local.humber_id}-LAW"
   law_sku              = "PerGB2018"
   law_retention_days   = 30
-  rsv_name             = "RSV-${local.humber_id}"
+  rsv_name             = "RSV-${local.humber_id}" # must start with a letter
   rsv_sku              = "Standard"
-  storage_account_name = "${local.humber_id}sukruthasa"
+  storage_account_name = "24049654projectsa" # no hyphens allowed
   storage_tier         = "Standard"
   storage_replication  = "LRS"
   tags                 = local.common_tags
 }
 
 module "vmlinux" {
-  source           = "./modules/vmlinux-9654"
+  source           = "./modules/vmlinux-2404-9654"
   rg_name          = module.rgroup.rg_name
   location         = local.location
   linux_vms        = local.linux_vms
-  vm_size          = "Standard_B1ms"
-  admin_username   = "sukruthaadmin"
-  public_key_path  = "~/.ssh/id_rsa.pub"
-  private_key_path = "~/.ssh/id_rsa"
+  vm_size          = "Standard_B2ats_v2"
+  admin_username   = "ruchiadmin"
+  public_key_path  = "~/.ssh/id_rsa_tf.pub"
+  private_key_path = "~/.ssh/id_rsa_tf"
   subnet_id        = module.network.subnet_id
   boot_diag_uri    = module.common.storage_account_blob_endpoint
-  dns_label_prefix = "ss"
+  dns_label_prefix = "rp"
   os_disk_type     = "Standard_LRS"
   os_disk_size_gb  = 32
   image = {
     publisher = "OpenLogic"
     offer     = "CentOS"
-    sku       = "8_2"
+    sku       = "8_2-gen2"
     version   = "latest"
   }
   nw_extension = {
@@ -96,18 +96,18 @@ module "vmlinux" {
 }
 
 module "vmwindows" {
-  source           = "./modules/vmwindows-9654"
+  source           = "./modules/vmwindows-2404-9654"
   rg_name          = module.rgroup.rg_name
   location         = local.location
   vm_count         = local.windows_count
   vm_name_prefix   = local.windows_name_prefix
   avset_name       = "${local.humber_id}-w-avset"
-  vm_size          = "Standard_B2s"
-  admin_username   = "sukruthaadmin"
-  admin_password   = "Humber@9654Pass!" # CHANGE THIS
+  vm_size          = "Standard_B2als_v2"
+  admin_username   = "ruchiadmin"
+  admin_password   = "Rproject@2404"
   subnet_id        = module.network.subnet_id
   boot_diag_uri    = module.common.storage_account_blob_endpoint
-  dns_label_prefix = "ss"
+  dns_label_prefix = "rp"
   os_disk_type     = "StandardSSD_LRS"
   os_disk_size_gb  = 127
   image = {
@@ -120,7 +120,7 @@ module "vmwindows" {
 }
 
 module "datadisk" {
-  source       = "./modules/datadisk-9654"
+  source       = "./modules/datadisk-2404-9654"
   rg_name      = module.rgroup.rg_name
   location     = local.location
   disk_size_gb = 10
@@ -140,7 +140,7 @@ module "datadisk" {
 }
 
 module "loadbalancer" {
-  source        = "./modules/loadbalancer-9654"
+  source        = "./modules/loadbalancer-2404-9654"
   rg_name       = module.rgroup.rg_name
   location      = local.location
   lb_name       = "${local.humber_id}-LB"
@@ -163,13 +163,13 @@ module "loadbalancer" {
 }
 
 module "database" {
-  source                = "./modules/database-9654"
+  source                = "./modules/database-2404-9654"
   rg_name               = module.rgroup.rg_name
   location              = local.location
-  db_name               = "${local.humber_id}-psql-sukrutha"
+  db_name               = "${local.humber_id}-psql-group"
   db_version            = "16"
   admin_login           = "psqladmin"
-  admin_password        = "Psql@9654Pass!" # CHANGE THIS
+  admin_password        = "Rdata@2404"
   sku_name              = "B_Standard_B1ms"
   storage_mb            = 32768
   backup_retention_days = 7
