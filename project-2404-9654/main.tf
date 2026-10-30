@@ -4,7 +4,7 @@ locals {
 
   common_tags = {
     Project        = "CCGC 5502 Terraform Project"
-    Name           = "ruchi.patel"
+    Name           = "ruchi.patel, sukrutha.srirangam"
     ExpirationDate = "2027-12-31"
     Environment    = "Learning"
   }
